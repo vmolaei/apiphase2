@@ -73,10 +73,24 @@ class StudentController extends Controller
     }
     //profile Api
     public function profile(){
+        return response()->json([
+            "status"=>1,
+            "message"=>"student's profile information",
+            "data"=>auth()->user()
+        ]);
 
     }
     //logout profile
     public function logout(){
+        auth()->user()->tokens()->delete();
+
+        return response()->json([
+            "status"=>1,
+            "message"=>"user logged out successfully"
+        ]);
+
+
+
 
     }
 }
