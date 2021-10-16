@@ -79,6 +79,28 @@ class ProjrctController extends Controller
     }
     //delete project
     public function deleteProject($id){
+        $student_id = auth()->user()->id;
+        if(Project::where([
+            "id"=>$id,
+            "student_id"=>$student_id
+        ])->exists()){
+            $project = Project::where([
+                "id"=>$id,
+                "student_id"=>$student_id
+            ])->first();
+            $project->delete();
+            return response()->json([
+                "status"=>1,
+                "message"=>"project deleted successfully"
+            ]);
+
+        } else{
+            return response([
+               "status"=>0,
+               "message"=>"project not found"
+            ]);
+        }
+
 
     }
 }
