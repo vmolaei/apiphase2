@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Student;
+
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Parser\Tokens;
+
 
 class StudentController extends Controller
 {
@@ -45,7 +48,7 @@ class StudentController extends Controller
         $student=Student::where("email","=",$request->email)->first();
         if(isset($student->id)){
             if(Hash::check($request->password,$student->password)){
-                //create tokrn
+                //create token
                 $token = $student->createToken("auth_token")->plainTextToken;
                 //send response
                 return response()->json([
